@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-for arg in "$@"; do
-  dir-tree "$(readlink -m "$arg")" | xargs ls -ld
-done | column -t
+if [ $# -eq 0 ]; then
+  "$0" .
+else
+  for arg in "$@"; do
+    dir-tree "$(readlink -m "$arg")" | xargs ls -ld
+  done | column -t
+fi
