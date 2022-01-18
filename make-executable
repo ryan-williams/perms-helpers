@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 
-find "$@" -type f | grep -v '/\.' | grep -v '$\.' | xargs chmod -R 755
+if which pcregrep &>/dev/null; then
+  find "$@" -type f \
+  | pcregrep -v '/\.[^/]*$' \
+  | pcregrep -v '\$\.[^/]*$' \
+  | xargs chmod -R 755
+else
+  find "$@" -type f \
+  | xargs chmod -R 755
+fi
